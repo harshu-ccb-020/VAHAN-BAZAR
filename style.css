@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #222;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+#filters, #calculators, #comparison, #launches, #showrooms, #testRide, #sellBike {
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+#vehicleList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+.vehicleCard {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  width: 200px;
+}
+.vehicleCard img {
+  width: 100%;
+}
+form input, form select, form button {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  width: 100%;
+}
