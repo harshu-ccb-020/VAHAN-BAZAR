@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🔍  Bike Filter</title>
+  <style>
+    :root {
+      --lavender: #b39ddb;
+      --lavender-light: #ede7f6;
+      --lavender-dark: #7e57c2;
+      --text-dark: #333;
+      --shadow-lavender: rgba(179, 157, 219, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f6ff;
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--lavender-dark) 40%, var(--lavender) 100%);
+      color: #fff;
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px var(--shadow-lavender);
+      border-radius: 0 0 16px 16px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 2px 8px var(--shadow-lavender);
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      color: var(--lavender-dark);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--lavender);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--lavender-dark) 60%, var(--lavender) 100%);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .results {
+      margin-top: 1rem;
+    }
+
+    .bike-card {
+      background: var(--lavender-light);
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px var(--shadow-lavender);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔍 Filter Bikes</h1>
+  </header>
+
+  <div class="content">
+    <label for="brand">Brand Code (1–7):</label>
+    <input type="number" id="brand" min="1" max="7" placeholder="e.g., 3 for TVS">
+
+    <label for="price">Max Price (₹):</label>
+    <input type="number" id="price" min="40000" max="200000" placeholder="e.g., 90000">
+
+    <label for="mileage">Min Mileage (km/l or km/charge):</label>
+    <input type="number" id="mileage" min="30" max="200" placeholder="e.g., 45">
+
+    <button onclick="applyFilters()">Apply Filters</button>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    const brandMap = {
+      1: "Hero",
+      2: "Honda",
+      3: "TVS",
+      4: "Yamaha",
+      5: "Suzuki",
+      6: "Royal Enfield",
+      7: "Ola"
+    };
+
+    const bikes = [
+      { name: "Hero ZoomX", brand: "Hero", price: 85000, mileage: 50 },
+      { name: "Honda EV Spark", brand: "Honda", price: 98000, mileage: 120 },
+      { name: "TVS Neo Glide", brand: "TVS", price: 78000, mileage: 48 },
+      { name: "Yamaha RZ 200", brand: "Yamaha", price: 105000, mileage: 40 },
+      { name: "Suzuki Thunder", brand: "Suzuki", price: 99000, mileage: 42 },
+      { name: "Royal Tracker", brand: "Royal Enfield", price: 135000, mileage: 38 },
+      { name: "Ola S1 Pro", brand: "Ola", price: 115000, mileage: 180 }
+    ];
+
+    function applyFilters() {
+      const brandCode = parseInt(document.getElementById('brand').value);
+      const maxPrice = parseInt(document.getElementById('price').value);
+      const minMileage = parseInt(document.getElementById('mileage').value);
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+
+      const selectedBrand = brandMap[brandCode];
+
+      const filtered = bikes.filter(bike => {
+        const matchesBrand = !selectedBrand || bike.brand === selectedBrand;
+        const matchesPrice = !maxPrice || bike.price <= maxPrice;
+        const matchesMileage = !minMileage || bike.mileage >= minMileage;
+        return matchesBrand && matchesPrice && matchesMileage;
+      });
+
+      if (filtered.length === 0) {
+        results.innerHTML = `<p style="color:red;">No bikes match your criteria.</p>`;
+        return;
+      }
+
+      filtered.forEach(bike => {
+        const card = document.createElement('div');
+        card.className = 'bike-card';
+        card.innerHTML = `
+          <strong>${bike.name}</strong><br>
+          Brand: ${bike.brand}<br>
+          Price: ₹${bike.price}<br>
+          Mileage: ${bike.mileage} km
+        `;
+        results.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

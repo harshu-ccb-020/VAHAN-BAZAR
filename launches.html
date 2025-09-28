@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📅 Upcoming Bike Launches</title>
+  <style>
+    :root {
+      --primary-orange: #885af4;
+      --accent-orange: rgb(16, 63, 133);
+      --light-bg: #fff3e0;
+      --hover-bg: #f4e0c2;
+      --text-dark: #333;
+      --shadow-orange: rgba(255, 152, 0, 0.27);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fafafa;
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--primary-orange) 40%, var(--accent-orange) 100%);
+      color: #fff;
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+      border-radius: 0 0 16px 16px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 2px 8px var(--shadow-orange);
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .launch-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .launch-card img {
+      width: 100%;
+      max-width: 300px;
+      object-fit: cover;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .launch-details {
+      flex: 1;
+      padding: 1rem;
+    }
+
+    .launch-details h2 {
+      margin-top: 0;
+      color: var(--primary-orange);
+    }
+
+    .launch-details p {
+      margin: 0.5rem 0;
+    }
+
+    .category-label {
+      display: inline-block;
+      background: var(--light-bg);
+      color: var(--primary-orange);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .launch-card {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .launch-card img {
+        border-radius: 12px 12px 0 0;
+      }
+
+      .launch-details {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📅 Upcoming Bike Launches</h1>
+  </header>
+
+  <div class="content" id="launchList"></div>
+
+  <script>
+    const launches = [
+      {
+        name: "Hero ZoomX 125",
+        category: "Scooter",
+        launchDate: "Oct 5, 2025",
+        image: "https://via.placeholder.com/300x200?text=ZoomX+125",
+        specs: "125cc, LED lights, Bluetooth, 50 km/l"
+      },
+      {
+        name: "TVS Neo Glide",
+        category: "Scooter",
+        launchDate: "Oct 12, 2025",
+        image: "https://via.placeholder.com/300x200?text=Neo+Glide",
+        specs: "110cc, USB charger, 48 km/l"
+      },
+      {
+        name: "Honda EV Spark",
+        category: "EV",
+        launchDate: "Oct 18, 2025",
+        image: "https://via.placeholder.com/300x200?text=EV+Spark",
+        specs: "Electric, 120 km range, Fast charge"
+      },
+      {
+        name: "Ather X2",
+        category: "EV",
+        launchDate: "Oct 22, 2025",
+        image: "https://via.placeholder.com/300x200?text=Ather+X2",
+        specs: "Electric, 150 km range, Touchscreen dash"
+      },
+      {
+        name: "Yamaha RZ 200",
+        category: "Motorbike",
+        launchDate: "Oct 25, 2025",
+        image: "https://via.placeholder.com/300x200?text=RZ+200",
+        specs: "200cc, ABS, 6-speed, 40 km/l"
+      },
+      {
+        name: "Suzuki Thunder 250",
+        category: "Motorbike",
+        launchDate: "Oct 28, 2025",
+        image: "https://via.placeholder.com/300x200?text=Thunder+250",
+        specs: "250cc, Dual disc, 42 km/l"
+      },
+      {
+        name: "Ola S1 Pro Max",
+        category: "EV",
+        launchDate: "Nov 1, 2025",
+        image: "https://via.placeholder.com/300x200?text=S1+Pro+Max",
+        specs: "Electric, 180 km range, Cruise control"
+      },
+      {
+        name: "Bajaj Pulsar NX",
+        category: "Motorbike",
+        launchDate: "Nov 5, 2025",
+        image: "https://via.placeholder.com/300x200?text=Pulsar+NX",
+        specs: "220cc, Digital console, 45 km/l"
+      },
+      {
+        name: "Simple One Plus",
+        category: "EV",
+        launchDate: "Nov 10, 2025",
+        image: "https://via.placeholder.com/300x200?text=One+Plus",
+        specs: "Electric, 200 km range, Smart app"
+      },
+      {
+        name: "Royal Enfield Tracker",
+        category: "Motorbike",
+        launchDate: "Nov 15, 2025",
+        image: "https://via.placeholder.com/300x200?text=Tracker",
+        specs: "350cc, Retro styling, 38 km/l"
+      }
+    ];
+
+    const container = document.getElementById('launchList');
+
+    launches.forEach(bike => {
+      const card = document.createElement('div');
+      card.className = 'launch-card';
+
+      card.innerHTML = `
+        <img src="${bike.image}" alt="${bike.name}">
+        <div class="launch-details">
+          <span class="category-label">${bike.category}</span>
+          <h2>${bike.name}</h2>
+          <p><strong>Launch Date:</strong> ${bike.launchDate}</p>
+          <p><strong>Specifications:</strong> ${bike.specs}</p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>

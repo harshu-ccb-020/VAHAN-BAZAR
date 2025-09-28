@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📍 Showroom Finder</title>
+  <style>
+    :root {
+      --primary-orange: #885af4;
+      --accent-orange: #5838a3;
+      --light-bg: #fff3e0;
+      --hover-bg: #f4e0c2;
+      --text-dark: #333;
+      --shadow-orange: rgba(255, 152, 0, 0.27);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fafafa;
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--primary-orange) 40%, var(--accent-orange) 100%);
+      color: #fff;
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+      border-radius: 0 0 16px 16px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 2px 8px var(--shadow-orange);
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      color: var(--primary-orange);
+    }
+
+    select, button {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--primary-orange);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--primary-orange) 60%, var(--accent-orange) 100%);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .results {
+      margin-top: 1rem;
+    }
+
+    .showroom-card {
+      background: var(--light-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📍 Showroom Finder</h1>
+  </header>
+
+  <div class="content">
+    <label for="state">Select State:</label>
+    <select id="state" onchange="populateCities()">
+      <option value="">-- Choose State --</option>
+      <option value="Andhra Pradesh">Andhra Pradesh</option>
+      <option value="Telangana">Telangana</option>
+      <option value="Tamil Nadu">Tamil Nadu</option>
+    </select>
+
+    <label for="city">Select City:</label>
+    <select id="city">
+      <option value="">-- Choose City --</option>
+    </select>
+
+    <button onclick="findShowroom()">Find Showroom</button>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    const showroomData = {
+      "Andhra Pradesh": {
+        "Guntur": "Main Road, Near Bus Stand",
+        "Narasaraopeta": "College Street, Beside Petrol Bunk",
+        "Vijayawada": "MG Road, Opp. Mall"
+      },
+      "Telangana": {
+        "Hyderabad": "Banjara Hills, Near Metro Station",
+        "Warangal": "Hanamkonda Circle, Near Bus Depot"
+      },
+      "Tamil Nadu": {
+        "Chennai": "Mount Road, Opp. Spencer Plaza",
+        "Coimbatore": "Avinashi Road, Near Airport"
+      }
+    };
+
+    function populateCities() {
+      const state = document.getElementById('state').value;
+      const citySelect = document.getElementById('city');
+      citySelect.innerHTML = '<option value="">-- Choose City --</option>';
+
+      if (state && showroomData[state]) {
+        Object.keys(showroomData[state]).forEach(city => {
+          const option = document.createElement('option');
+          option.value = city;
+          option.textContent = city;
+          citySelect.appendChild(option);
+        });
+      }
+    }
+
+    function findShowroom() {
+      const state = document.getElementById('state').value;
+      const city = document.getElementById('city').value;
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+
+      if (state && city && showroomData[state] && showroomData[state][city]) {
+        const address = showroomData[state][city];
+        const card = document.createElement('div');
+        card.className = 'showroom-card';
+        card.innerHTML = `<strong>${city}, ${state}</strong><br>${address}`;
+        results.appendChild(card);
+      } else {
+        results.innerHTML = `<p style="color: red;">Please select both state and city.</p>`;
+      }
+    }
+  </script>
+</body>
+</html>

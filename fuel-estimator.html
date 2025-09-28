@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        :root {
+  --primary-orange: #885af4;
+  --accent-orange: #885af3;
+  --light-bg: #23be30;
+  --hover-bg: #2d1d8a;
+  --text-dark: #333;
+  --shadow-orange: rgba(255, 152, 0, 0.27);
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fafafa;
+  color: var(--text-dark);
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, var(--primary-orange) 40%, var(--accent-orange) 100%);
+  color: #fff;
+  padding: 2rem 1rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--shadow-orange);
+  border-radius: 0 0 16px 16px;
+}
+header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 2px 8px var(--shadow-orange);
+}
+
+/* Section Titles */
+h2 {
+  font-size: 1.8rem;
+  color: var(--primary-orange);
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Action Grid */
+.action-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  margin: 1rem auto 2rem;
+  max-width: 800px;
+}
+.tool-btn {
+  flex: 1 1 220px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--light-bg);
+  color: var(--primary-orange);
+  font-weight: 600;
+  box-shadow: 0 2px 8px var(--shadow-orange);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.tool-btn:hover {
+  background: var(--hover-bg);
+  color: #fff;
+}
+
+/* Content Area */
+.content {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+/* Form Elements */
+input, select, button {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border: 1px solid var(--primary-orange);
+  font-size: 1rem;
+}
+button {
+  background: linear-gradient(90deg, var(--primary-orange) 60%, var(--accent-orange) 100%);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  .tool-btn {
+    flex: 1 1 100%;
+  }
+}
+    </style>
+<head>
+  <meta charset="UTF-8">
+  <title>Fuel Cost Estimator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>⛽ Fuel Cost Estimator</h1>
+  </header>
+  <div class="content">
+    <p>Estimate your monthly fuel expenses based on distance, mileage, and fuel price.</p>
+    <!-- Add estimator form or logic -->
+  </div>
+  <script>
+function estimateFuelCost() {
+  const distance = parseFloat(document.getElementById('distance').value);
+  const mileage = parseFloat(document.getElementById('mileage').value);
+  const fuelPrice = parseFloat(document.getElementById('fuelPrice').value);
+
+  if (distance && mileage && fuelPrice) {
+    const litersNeeded = distance / mileage;
+    const cost = litersNeeded * fuelPrice;
+    document.getElementById('result').innerText = `Estimated Monthly Fuel Cost: ₹${cost.toFixed(2)}`;
+  }
+}
+</script>
+
+<div class="content">
+  <label>Monthly Distance (km): <input id="distance" type="number"></label><br>
+  <label>Bike Mileage (km/l): <input id="mileage" type="number"></label><br>
+  <label>Fuel Price (₹/l): <input id="fuelPrice" type="number"></label><br>
+  <button onclick="estimateFuelCost()">Estimate</button>
+  <p id="result"></p>
+</div>
+</body>
+</html>

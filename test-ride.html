@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🧪 Book Test Ride</title>
+  <style>
+    :root {
+      --primary-orange: #885af4;
+      --accent-orange: #461ba9;
+      --light-bg: #fff3e0;
+      --hover-bg: #f4e0c2;
+      --text-dark: #333;
+      --shadow-orange: rgba(255, 152, 0, 0.27);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fafafa;
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--primary-orange) 40%, var(--accent-orange) 100%);
+      color: #fff;
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+      border-radius: 0 0 16px 16px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 2px 8px var(--shadow-orange);
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      color: var(--primary-orange);
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--primary-orange);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--primary-orange) 60%, var(--accent-orange) 100%);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .confirmation {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--light-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧪 Book Test Ride</h1>
+  </header>
+
+  <div class="content">
+    <label for="name">Rider Name:</label>
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <label for="age">Rider Age:</label>
+    <input type="number" id="age" placeholder="Enter your age">
+
+    <label for="bike">Bike Model:</label>
+    <input type="text" id="bike" placeholder="Enter bike model">
+
+    <label for="date">Preferred Date:</label>
+    <input type="date" id="date">
+
+    <button onclick="bookTestRide()">Confirm Booking</button>
+
+    <div id="confirmation" class="confirmation"></div>
+  </div>
+
+  <script>
+    function bookTestRide() {
+      const name = document.getElementById('name').value.trim();
+      const age = document.getElementById('age').value.trim();
+      const bike = document.getElementById('bike').value.trim();
+      const date = document.getElementById('date').value;
+
+      const confirmation = document.getElementById('confirmation');
+      confirmation.innerHTML = '';
+
+      if (!name || !age || !bike || !date) {
+        confirmation.innerHTML = `<p style="color:red;">Please fill in all fields to book your test ride.</p>`;
+        return;
+      }
+
+      confirmation.innerHTML = `
+        <strong>✅ Booking Confirmed!</strong><br>
+        Rider: ${name} (Age ${age})<br>
+        Bike: ${bike}<br>
+        Date: ${date}<br>
+        <p>We'll contact you soon with location and timing details.</p>
+      `;
+    }
+  </script>
+</body>
+</html>

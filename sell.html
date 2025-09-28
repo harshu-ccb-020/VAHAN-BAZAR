@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🔄 Sell Your Bike</title>
+  <style>
+    :root {
+      --primary-orange: #885af4;
+      --accent-orange: #431aa1;
+      --light-bg: #fff3e0;
+      --hover-bg: #f4e0c2;
+      --text-dark: #333;
+      --shadow-orange: rgba(255, 152, 0, 0.27);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fafafa;
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--primary-orange) 40%, var(--accent-orange) 100%);
+      color: #fff;
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+      border-radius: 0 0 16px 16px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 2px 8px var(--shadow-orange);
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      color: var(--primary-orange);
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--primary-orange);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--primary-orange) 60%, var(--accent-orange) 100%);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .preview {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--light-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px var(--shadow-orange);
+    }
+
+    .preview img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔄 Sell Your Bike</h1>
+  </header>
+
+  <div class="content">
+    <label for="sellerName">Seller Name:</label>
+    <input type="text" id="sellerName" placeholder="Enter your name">
+
+    <label for="sellerContact">Seller Contact Details:</label>
+    <textarea id="sellerContact" placeholder="Phone, Email, or Address"></textarea>
+
+    <label for="bikeModel">Bike Model:</label>
+    <input type="text" id="bikeModel" placeholder="e.g., Pulsar 150">
+
+    <label for="bikeYear">Year of Purchase:</label>
+    <input type="number" id="bikeYear" placeholder="e.g., 2021">
+
+    <label for="bikeMileage">Mileage (km/l):</label>
+    <input type="number" id="bikeMileage" placeholder="e.g., 45">
+
+    <label for="bikePrice">Expected Price (₹):</label>
+    <input type="number" id="bikePrice" placeholder="e.g., 65000">
+
+    <label for="bikeImage">Upload Bike Image:</label>
+    <input type="file" id="bikeImage" accept="image/*">
+
+    <button onclick="submitListing()">Submit Listing</button>
+
+    <div id="preview" class="preview"></div>
+  </div>
+
+  <script>
+    function submitListing() {
+      const name = document.getElementById('sellerName').value.trim();
+      const contact = document.getElementById('sellerContact').value.trim();
+      const model = document.getElementById('bikeModel').value.trim();
+      const year = document.getElementById('bikeYear').value.trim();
+      const mileage = document.getElementById('bikeMileage').value.trim();
+      const price = document.getElementById('bikePrice').value.trim();
+      const imageInput = document.getElementById('bikeImage');
+      const preview = document.getElementById('preview');
+
+      preview.innerHTML = '';
+
+      if (!name || !contact || !model || !year || !mileage || !price || !imageInput.files[0]) {
+        preview.innerHTML = `<p style="color:red;">Please fill in all fields and upload an image.</p>`;
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.innerHTML = `
+          <strong>✅ Listing Submitted!</strong><br>
+          Seller: ${name}<br>
+          Contact: ${contact}<br>
+          Bike: ${model} (${year})<br>
+          Mileage: ${mileage} km/l<br>
+          Price: ₹${price}<br>
+          <img src="${e.target.result}" alt="Bike Image">
+        `;
+      };
+      reader.readAsDataURL(imageInput.files[0]);
+    }
+  </script>
+</body>
+</html>

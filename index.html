@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<style>
+  header {
+    background: linear-gradient(90deg, #885af4 40%, #a649e5 100%);
+    color: #c27cf0;
+    padding: 2rem 1rem 1rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-radius: 0 0 16px 16px;
+    margin-bottom: 1.5rem;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 2px 8px #3332;
+  }
+  #categories {
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 0.5rem 1rem 1.5rem 1rem;
+  }
+  #categories h2 {
+    text-align: left;
+    margin-bottom: 0.7rem;
+    font-size: 1.3rem;
+    color: #885af4;
+    font-weight: 600;
+  }
+  .category-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  .category-grid button {
+    flex: 1 1 0;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    background: #fff3e0;
+    color: #885af4;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #69563944;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .category-grid button:hover {
+    background: #f4e0c2;
+    color: #fff;
+  }
+  #filterPanel {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff3e0;
+  border: 1.5px solid #885af4;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 220px;
+  box-shadow: 0 2px 12px #ff980044;
+  z-index: 100;
+  font-size: 0.95rem;
+}
+#filterPanel h3 {
+  margin-top: 0;
+  color: #885af4;
+  font-size: 1.1rem;
+  text-align: center;
+}
+#filterPanel select,
+#filterPanel input[type="range"],
+#filterPanel button {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid #885af4;
+  font-size: 0.9rem;
+}
+#filterPanel button {
+  background: linear-gradient(90deg, #c757f0 60%, #885af4 100%);
+  color: #885af4;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+#filterPanel label {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  color: #885af4;
+}
+  #backgroundSlideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+  }
+  * { box-sizing: border-box; }
+    body { margin: 0; font-family: sans-serif; }
+
+    .slideshow-container {
+      position: relative;
+      max-width: 800px;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .dots {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .active, .dot:hover {
+      background-color: #717171;
+    }
+    .slideshow-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 320px; /* or your desired width */
+  z-index: 1;
+}
+
+.slideshow-container {
+  width: 100%;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.slideshow-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 320px; /* Adjust as needed */
+  z-index: 1;
+}
+body {
+      margin: 0;
+      padding: 0;
+      height: 400vh;
+      overflow: hidden;
+      position: relative;
+      font-family: sans-serif;
+    }
+
+    .background-marquee {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      width: 500%;
+      height: 900px; /* Adjust height as needed */
+      transform: translateY(-20%);
+      overflow: hidden;
+      z-index: -1;
+      opacity: 0.5; /* Subtle background effect */
+    }
+
+    .marquee-track {
+      display: flex;
+      animation: scroll 25s linear infinite;
+      gap: 2rem;
+    }
+
+    .marquee-track img {
+      height: 70%;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-top: 40vh;
+      color: #333;
+    }
+</style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wheel verse🚲</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  
+</head>
+<body>
+  <header>
+    <h1>Wheel verse</h1>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 0.7rem; margin-top: 1rem;">
+      <div style="position: relative; width: 320px;">
+        <input type="text" id="searchInput" placeholder="🔍 Type to search bikes, scooters, EVs..." 
+          style="width: 100%; padding: 0.7rem 2.5rem 0.7rem 1rem; border-radius: 12px; border: 1.5px solid #ffc107; font-size: 1.05rem; box-shadow: 0 2px 8px #ff980044; transition: border 0.2s, box-shadow 0.2s;" 
+          onfocus="this.style.borderColor='#ff9800'; this.style.boxShadow='0 2px 12px #ffc10744';" 
+          onblur="this.style.borderColor='#ffc107'; this.style.boxShadow='0 2px 8px #ff980044';"
+          autocomplete="off"
+        />
+        <div class="background-marquee">
+  <div class="marquee-track">
+    <img src="honda6g1.jpg" alt="Bike 1">
+    <img src="re1.jpg" alt="Bike 6">
+    <img src="ola1.jpg" alt="Bike 2">
+    <img src="pulasr1.jpg" alt="Bike 3">
+    <img src="heroelectric.jpg" alt="Bike 4">
+    <img src="jupyter1.jpg" alt="Bike 5">
+    <img src="re1.jpg" alt="Bike 6">
+    <img src="elecbike1.jpg" alt="Bike 7">
+    <img src="pulasr1.jpg" alt="Bike 3">
+    <img src="jupyter1.jpg" alt="Bike 5">
+    <img src="fz1.jpg" alt="Bike 8">
+  </div>
+</div>
+
+
+
+        <div id="searchSuggestions" style="position: absolute; top: 110%; left: 0; width: 100%; background: #fff3e0; border-radius: 0 0 12px 12px; box-shadow: 0 2px 8px #ff980044; z-index: 10; display: none;"></div>
+      </div>
+    </div>
+    <script>
+      // Demo data for suggestions
+      const bikes = [
+        "Honda Activa 6G", "TVS Jupiter", "Suzuki Access 125", "Royal Enfield Classic 350",
+        "Hero Splendor Plus", "Ather 450X", "Ola S1 Pro", "Bajaj Pulsar NS200", "Yamaha FZ-S", "Revolt RV400"
+      ];
+      const input = document.getElementById('searchInput');
+      const suggestions = document.getElementById('searchSuggestions');
+      input.addEventListener('input', function() {
+        const val = this.value.trim().toLowerCase();
+        if (!val) {
+          suggestions.style.display = 'none';
+          return;
+        }
+        const filtered = bikes.filter(b => b.toLowerCase().includes(val));
+        if (filtered.length) {
+          suggestions.innerHTML = filtered.map(b => `<div style="padding:0.6rem 1rem; cursor:pointer;" onclick="document.getElementById('searchInput').value='${b}'; document.getElementById('searchSuggestions').style.display='none';">${b}</div>`).join('');
+          suggestions.style.display = 'block';
+        } else {
+          suggestions.innerHTML = `<div style="padding:0.6rem 1rem; color:#ff9800;">No matches found</div>`;
+          suggestions.style.display = 'block';
+        }
+      });
+      document.addEventListener('click', e => {
+        if (!suggestions.contains(e.target) && e.target !== input) {
+          suggestions.style.display = 'none';
+        }
+      });
+
+      // Voice search (Web Speech API)
+      document.getElementById('voiceSearchBtn').onclick = function() {
+        if (!('webkitSpeechRecognition' in window)) {
+          alert('Voice search not supported in this browser.');
+          return;
+        }
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-IN';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.onresult = function(event) {
+          input.value = event.results[0][0].transcript;
+          input.dispatchEvent(new Event('input'));
+        };
+        recognition.onerror = function() {
+          alert('Could not recognize speech. Try again.');
+        };
+        recognition.start();
+      };
+    </script>
+  </header>
+  
+
+  <section id="categories">
+    <div class="category-grid">
+      <button onclick="window.location.href='scooters.html'">🛵 Scooters</button>
+      <button onclick="window.location.href='motorcycles.html'">🏍️ Motorcycles</button>
+      <button onclick="window.location.href='ev.html'">⚡ EV's</button>
+    </div>
+  </section>
+
+  <section id="emiCalculator">
+    <h2 style="text-align:center; font-size:1.3rem; color:#885af4; margin-bottom:0.7rem;">📈 EMI Calculator</h2>
+    <div style="display: flex; flex-direction: column; gap: 0.7rem; max-width: 220px; margin: 0 auto; align-items: center;">
+      <input type="number" id="loanAmount" placeholder="Loan Amount (₹)" 
+        style="width: 100%; padding: 0.5rem 0.7rem; border-radius: 8px; border: 1px solid #885af4; box-shadow: 0 2px 8px #ff980044; font-size: 0.9rem; transition: border 0.2s, box-shadow 0.2s;" 
+        onfocus="this.style.borderColor='#ffc107'; this.style.boxShadow='0 2px 12px #ffc10744';" 
+        onblur="this.style.borderColor='#ff9800'; this.style.boxShadow='0 2px 8px #ff980044';"
+      />
+      <input type="number" id="interestRate" placeholder="Interest Rate (%)" 
+        style="width: 100%; padding: 0.5rem 0.7rem; border-radius: 8px; border: 1px solid #885af4; box-shadow: 0 2px 8px #ff980044; font-size: 0.9rem; transition: border 0.2s, box-shadow 0.2s;" 
+        onfocus="this.style.borderColor='#ffc107'; this.style.boxShadow='0 2px 12px #ffc10744';" 
+        onblur="this.style.borderColor='#ff9800'; this.style.boxShadow='0 2px 8px #ff980044';"
+      />
+      <input type="number" id="tenure" placeholder="Tenure (months)" 
+        style="width: 100%; padding: 0.5rem 0.7rem; border-radius: 8px; border: 1px solid #885af4; box-shadow: 0 2px 8px #ff980044; font-size: 0.9rem; transition: border 0.2s, box-shadow 0.2s;" 
+        onfocus="this.style.borderColor='#ffc107'; this.style.boxShadow='0 2px 12px #ffc10744';" 
+        onblur="this.style.borderColor='#ff9800'; this.style.boxShadow='0 2px 8px #ff980044';"
+      />
+      <button onclick="calculateEMI()" 
+        style="width: 100%; padding: 0.5rem 0.7rem; border-radius: 8px; background: linear-gradient(90deg, 885af4#d771ee 60%, #885af4 100%); color: #885af4; font-weight: bold; font-size: 0.95rem; border: none; box-shadow: 0 2px 8px #4a0adf; cursor: pointer; transition: background 0.2s;">
+        Calculate EMI
+      </button>
+      <p id="emiResult" style="text-align:center; font-size:0.95rem; color:#885af4; margin-top:0.3rem;"></p>
+    </div>
+  </section></section>
+  <div class="slideshow-wrapper">
+  <div class="slideshow-container">
+    <div class="slide"><img src="C:\Users\maddi\OneDrive\Desktop\Logos\honda6g1.jpg" alt="Image 1"></div>
+    <div class="slide"><img src="C:\Users\maddi\OneDrive\Desktop\Logos\motorbike1.jpg" alt="Image 2"></div>
+    <div class="slide"><img src="C:\Users\maddi\OneDrive\Desktop\Logos\elecbike1.jpg" alt="Image 3"></div>
+  </div>
+  <div class="dots">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+</div>
+
+<script>
+  let slideIndex = 0;
+  let slides = document.getElementsByClassName("slide");
+  let dots = document.getElementsByClassName("dot");
+
+  function showSlides(n) {
+    if (n >= slides.length) slideIndex = 0;
+    if (n < 0) slideIndex = slides.length - 1;
+
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+
+    slides[slideIndex].style.display = "block";
+    dots[slideIndex].className += " active";
+  }
+
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+
+  function currentSlide(n) {
+    showSlides(slideIndex = n - 1);
+  }
+
+  function autoSlide() {
+    slideIndex++;
+    showSlides(slideIndex);
+    setTimeout(autoSlide, 4000); // Change image every 4 seconds
+  }
+
+  showSlides(slideIndex);
+  autoSlide();
+</script>
+
+<script>
+  <button id="toggleFilterBtn" style="margin: 1rem auto; display: block; padding: 0.6rem 1rem; font-size: 1rem; background: #ff9800; color: white; border: none; border-radius: 8px; cursor: pointer; color:#885af4; margin-bottom:0.7rem;">
+  🔍 Show Filters
+</button>
+</script>
+  <section id="actions">
+    <h2 style="text-align:center;">🛠️ Tools & Actions</h2>
+    <div class="action-grid" style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; margin-top: 1rem; color:#885af4; margin-bottom:0.7rem;">
+      <button class="tool-btn" onclick="window.open('fuel-estimator.html', '_blank')">
+        ⛽ Fuel Cost Estimator
+      </button>
+      <button class="tool-btn" onclick="window.open('launches.html', '_blank')">
+        📅 Upcoming Launches
+      </button>
+      <button class="tool-btn" onclick="window.open('showroom.html', '_blank')">
+        📍 Showroom Finder
+      </button>
+      <button class="tool-btn" onclick="window.open('test-ride.html', '_blank')">
+        🧪 Book Test Ride
+      </button>
+      <button class="tool-btn" onclick="window.open('sell.html', '_blank')">
+        🔄 Sell Your Bike
+      </button>
+      <button class="tool-btn" onclick="window.open('filter.html', '_blank')">
+        Filters
+      </button>
+    </div>
+    <style>
+      .tool-btn {
+        flex: 1 1 180px;
+        min-width:180px;
+        padding:1.2rem;
+        border-radius:14px;
+        background:#fff3e0;
+        color:#885af4;
+        font-weight:600;
+        font-size:1.1rem;
+        box-shadow:0 2px 8px #ff980044;
+        border:none;
+        cursor:pointer;
+        transition:background 0.2s, color 0.2s;
+      }
+      .tool-btn:hover, .tool-btn:focus {
+        background: #885af4;
+        color: #fff;
+        outline: none;
+      }
+      .tool-btn:active {
+        background: #885af4;
+        color: #fff;
+      }
+    </style>
+  </section>
+  <style>
+    footer {
+      text-align: center;
+      padding: 1rem 0;
+      color: #885af4;
+      font-size: 1rem;
+      background: #fff3e0;
+      border-radius: 16px 16px 0 0;
+      margin-top: 2rem;
+    }
+  </style>
+  <script>
+    document.querySelector('footer p').innerHTML = '&copy; Made for riders in 🇮🇳 INDIA | Powered by VAHAN BAZAR 🚀';
+  </script>
+  <footer>
+    <p>Made for riders in 🇮🇳 INDIA| Powered by VAHAN BAZAR 🚀</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
